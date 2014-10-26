@@ -1,6 +1,6 @@
 PuppetLint.new_check(:roles_class_params) do
   def check
-    class_indexes.select {|c| c[:name_token].value.start_with?('role')}.each do |klass|
+    class_indexes.select {|c| c[:name_token].value.start_with?('roles')}.each do |klass|
       unless klass[:param_tokens].nil?
         klass[:param_tokens].select {|t|t.type == :VARIABLE }.each do |token|
           notify :warning, {
