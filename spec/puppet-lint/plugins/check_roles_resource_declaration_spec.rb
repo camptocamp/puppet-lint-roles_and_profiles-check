@@ -35,7 +35,21 @@ class roles::foo {
       end
     end
 
-    context 'with class declaration' do
+    context 'with profile declaration' do
+      let(:code) do
+        <<-EOS
+class roles::foo {
+  class { 'profiles::bar': }
+}
+        EOS
+      end
+
+      it 'should not detect any problems' do
+        expect(problems).to have(0).problems
+      end
+    end
+
+    context 'with any class declaration' do
       let(:code) do
         <<-EOS
 class roles::foo {
@@ -45,15 +59,19 @@ class roles::foo {
       end
 
       it 'should not detect any problems' do
-        expect(problems).to have(0).problems
+        expect(problems).to have(1).problems
+      end
+
+      it 'should create a warning' do
+        expect(problems).to contain_warning(msg).on_line(2).in_column(3)
       end
     end
 
-    context 'with class inclusion' do
+    context 'with profile inclusion' do
       let(:code) do
         <<-EOS
 class roles::foo {
-  include bar
+  include profiles::bar
 }
         EOS
       end
@@ -63,11 +81,29 @@ class roles::foo {
       end
     end
 
+    context 'with any class inclusion' do
+      let(:code) do
+        <<-EOS
+class roles::foo {
+  include bar
+}
+        EOS
+      end
+
+      it 'should not detect any problems' do
+        expect(problems).to have(1).problems
+      end
+
+      it 'should create a warning' do
+        expect(problems).to contain_warning(msg).on_line(2).in_column(3)
+      end
+    end
+
     context 'with one resource' do
       let(:code) do 
         <<-EOS
 class roles::foo {
-  include bar
+  include profiles::bar
   bar { 'bar': }
 }
         EOS
@@ -86,7 +122,7 @@ class roles::foo {
       let(:code) do 
         <<-EOS
 class roles::foo {
-  include bar
+  include profiles::bar
   bar { 'bar': }
   quux { 'quux': }
 }
