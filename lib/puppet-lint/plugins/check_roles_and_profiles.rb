@@ -42,7 +42,7 @@ PuppetLint.new_check(:roles_resource_declaration) do
   def check
     class_indexes.select {|c| c[:name_token].value.start_with?('role')}.each do |klass|
       resource_indexes.select { |r| r[:start] > klass[:start] and r[:end] < klass[:end] }.each do |resource|
-        if  resource[:type].type != :CLASS or !resource[:type].next_code_token.next_code_token.value.start_with?('profiles')
+        if  resource[:type].type != :CLASS or (resource[:type].next_code_token.next_code_token.value =~ /^(::)?profiles/) == nil
           notify :warning, {
             :message => 'expected no resource declaration',
             :line    => resource[:type].line,
@@ -51,7 +51,7 @@ PuppetLint.new_check(:roles_resource_declaration) do
         end
       end
       tokens[klass[:start]..klass[:end]].select { |t| t.value == 'include' }.each do |token|
-        if !token.next_code_token.value.start_with?('profiles')
+        if (token.next_code_token.value =~ /^(::)?profiles/) == nil
           notify :warning, {
             :message => 'expected no resource declaration',
             :line    => token.line,
