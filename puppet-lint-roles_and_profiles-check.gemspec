@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name        = 'puppet-lint-roles_and_profiles-check'
-  spec.version     = '0.1.0'
+  spec.version     = '0.1.1'
   spec.homepage    = 'https://github.com/mcanevet/puppet-lint-roles_and_profiles-check'
   spec.license     = 'MIT'
   spec.author      = 'Mickaël Canévet'
