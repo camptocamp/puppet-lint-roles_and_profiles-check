@@ -2,7 +2,7 @@
 
 Adds a new puppet-lint plugin to verify that your code matches Roles & Profiles
 paradigm.
-This plugin assumes that you role classes starts with ̀`roles`and your
+This plugin assumes that your role classes starts with ̀`roles`and your
 profiles classes starts with `profiles`.
 
 ## Installation
@@ -16,13 +16,13 @@ gem 'puppet-lint-roles_and_profiles-check'
 
 ## Usage
 
-This plugin provides a new checks to `puppet-lint`.
+This plugin provides new checks to `puppet-lint`.
 
 ### node_definition
 
 **--fix support: No**
 
-This check will raise a warning is your node definition does not contain only a role declaration.
+This check will raise a warning if your node definition does not contain only a role declaration.
 
 ```
 WARNING: expected only one role declaration
