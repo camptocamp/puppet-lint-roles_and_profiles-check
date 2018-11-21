@@ -49,6 +49,19 @@ class roles::foo {
       end
     end
 
+    context 'with ::profile declaration' do
+      let(:code) do
+        <<-EOS
+class roles::foo {
+  class { '::profile::bar': }
+}
+        EOS
+      end
+       it 'should not detect any problems' do
+        expect(problems).to have(0).problems
+      end
+    end
+
     context 'with any class declaration' do
       let(:code) do
         <<-EOS
@@ -81,6 +94,19 @@ class roles::foo {
       end
     end
 
+    context 'with ::profile inclusion' do
+      let(:code) do
+        <<-EOS
+class roles::foo {
+  include ::profile::bar
+}
+        EOS
+      end
+       it 'should not detect any problems' do
+        expect(problems).to have(0).problems
+      end
+    end
+
     context 'with any class inclusion' do
       let(:code) do
         <<-EOS
@@ -100,7 +126,7 @@ class roles::foo {
     end
 
     context 'with one resource' do
-      let(:code) do 
+      let(:code) do
         <<-EOS
 class roles::foo {
   include profiles::bar
@@ -119,7 +145,7 @@ class roles::foo {
     end
 
     context 'with two resources' do
-      let(:code) do 
+      let(:code) do
         <<-EOS
 class roles::foo {
   include profiles::bar

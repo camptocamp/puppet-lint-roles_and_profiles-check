@@ -70,7 +70,7 @@ class roles::foo(
     context 'with two parameters' do
       let(:code) do
         <<-EOS
-class roles::foo(
+class role::foo(
   $bar = 'bar',
   $baz = 'baz',
 ) {
